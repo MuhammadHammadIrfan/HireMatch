@@ -1,0 +1,10 @@
+// sentry.edge.config.ts
+// Runs in the Edge Runtime (proxy.ts / middleware)
+import * as Sentry from '@sentry/nextjs';
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.2 : 1.0,
+  enabled: process.env.NODE_ENV === 'production',
+});
