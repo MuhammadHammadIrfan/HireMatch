@@ -37,7 +37,7 @@ export default function PipelineClient({ columns }: { columns: Record<string, an
                 </div>
                 <div className="flex flex-col gap-2.5">
                   {apps.map(app => {
-                    const name = app.users?.full_name ?? 'Candidate';
+                    const name = app.candidates?.users?.full_name ?? 'Candidate';
                     return (
                       <div key={app.id}
                         onClick={() => router.push(`/recruiter/candidates/${app.candidate_id}`)}

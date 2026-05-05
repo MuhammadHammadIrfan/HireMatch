@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient } from '@/lib/supabase/server';
 import { notFound, redirect } from 'next/navigation';
 import ApplyConfirmationClient from './ApplyConfirmationClient';
 
@@ -33,8 +33,9 @@ export default async function ApplyPage({ params }: { params: Promise<{ jobId: s
     const sc = (scores ?? []).find((s: { job_id: string }) => s.job_id === jobId);
     const score = sc?.score_int ?? 0;
 
-    await supabase.from('applications').update({ match_score: score }).eq('id', newApp.id);
-    await supabase.from('match_scores').upsert({
+    const adminClient = createAdminClient();
+    await adminClient.from('applications').update({ match_score: score }).eq('id', newApp.id);
+    await adminClient.from('match_scores').upsert({
       application_id: newApp.id,
       score,
       score_raw: sc?.score_raw ?? 0,

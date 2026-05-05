@@ -33,14 +33,14 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
-      <body className="font-sans bg-hm-surface antialiased">
+      <body className="font-sans bg-hm-surface antialiased" suppressHydrationWarning>
         {/* Max-width mobile shell */}
         <div className="relative min-h-screen max-w-[430px] mx-auto bg-hm-surface shadow-2xl overflow-hidden">
           {/* PostHog: Suspense required because PostHogProvider uses useSearchParams */}

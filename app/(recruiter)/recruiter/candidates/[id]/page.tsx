@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import CandidateProfileViewClient from '@/app/(recruiter)/recruiter/candidates/[id]/CandidateProfileViewClient';
 
@@ -11,10 +11,11 @@ export default async function CandidateProfileViewPage({
   const { id } = await params;
   const { jobId, appId } = await searchParams;
   const supabase = await createClient();
+  const adminClient = createAdminClient();
 
   const [{ data: candidate }, { data: user }, { data: application }, { data: skillGaps }] = await Promise.all([
     supabase.from('candidates').select('*').eq('id', id).single(),
-    supabase.from('users').select('*').eq('id', id).single(),
+    adminClient.from('users').select('*').eq('id', id).single(),
     appId ? supabase.from('applications').select('*').eq('id', appId).single() : Promise.resolve({ data: null }),
     appId ? supabase.from('skill_gaps').select('*').eq('application_id', appId) : Promise.resolve({ data: [] }),
   ]);

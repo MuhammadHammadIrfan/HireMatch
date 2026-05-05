@@ -23,12 +23,16 @@ function getApiKey(): string {
 // ── Model Priority List ───────────────────────────────────
 
 const CHAT_MODELS = [
+  'gemini-2.5-flash',
   'gemini-2.0-flash',
-  'gemini-1.5-flash',
-  'gemini-1.5-pro',
+  'gemini-2.5-flash-lite',
 ] as const;
 
-const EMBEDDING_MODEL = 'text-embedding-004';
+const EMBEDDING_MODELS = [
+  'gemini-embedding-2',
+  'gemini-embedding-2-preview',
+  'gemini-embedding-001'
+];
 
 // ── Safety Settings ───────────────────────────────────────
 
@@ -96,25 +100,31 @@ export async function generateEmbeddingWithFallback(text: string): Promise<numbe
   const key = getApiKey();
   const MAX_RETRIES = 3;
 
-  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-    try {
-      const client = new GoogleGenerativeAI(key);
-      const model = client.getGenerativeModel({ model: EMBEDDING_MODEL });
-      const result = await model.embedContent(text.slice(0, 25000)); // token limit safety
-      const embedding = result.embedding.values;
-      console.log(`[Gemini Embed] Success: dims=${embedding.length}`);
-      return embedding;
-    } catch (err) {
-      console.warn(`[Gemini Embed] Failed attempt ${attempt}`, (err as Error).message);
-      if (isRetryable(err) && attempt < MAX_RETRIES) {
-        await sleep(1000 * attempt);
-      } else if (attempt === MAX_RETRIES) {
-        throw new Error('Gemini embedding failed after maximum retries.');
+  for (const modelName of EMBEDDING_MODELS) {
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const client = new GoogleGenerativeAI(key);
+        const model = client.getGenerativeModel({ model: modelName });
+        const result = await model.embedContent({
+          content: { role: 'user', parts: [{ text: text.slice(0, 25000) }] },
+          outputDimensionality: 768
+        } as any);
+        const embedding = result.embedding.values;
+        console.log(`[Gemini Embed] Success: model=${modelName} dims=${embedding.length}`);
+        return embedding;
+      } catch (err) {
+        console.warn(`[Gemini Embed] Failed attempt ${attempt} on ${modelName}`, (err as Error).message);
+        if (isRetryable(err) && attempt < MAX_RETRIES) {
+          await sleep(1000 * attempt);
+        } else if (attempt === MAX_RETRIES) {
+          // Exhuasted retries for this model, move to next model
+          break;
+        }
       }
     }
   }
 
-  throw new Error('Gemini embedding failed.');
+  throw new Error('All Gemini embedding models failed.');
 }
 
 // ── Resume Parsing ────────────────────────────────────────

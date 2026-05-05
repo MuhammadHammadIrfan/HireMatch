@@ -8,7 +8,7 @@ import HMStatusBadge from '@/components/ui/HMStatusBadge';
 import HMToast from '@/components/ui/HMToast';
 import { VALID_TRANSITIONS, STATUS_META } from '@/lib/types';
 import type { ApplicationStatus, DBJob } from '@/lib/types';
-import { createClient } from '@/lib/supabase/client';
+import { updateApplicationStatus } from '@/app/actions/applications';
 
 interface Props {
   job: DBJob;
@@ -22,14 +22,17 @@ export default function CandidateRankingClient({ job, applications: initApps }: 
   const [toast, setToast] = useState<string | null>(null);
 
   const sorted = [...applications].sort((a, b) =>
-    sort === 'match' ? (b.match_score ?? 0) - (a.match_score ?? 0) : (a.users?.full_name ?? '').localeCompare(b.users?.full_name ?? '')
+    sort === 'match' ? (b.match_score ?? 0) - (a.match_score ?? 0) : (a.candidates?.users?.full_name ?? '').localeCompare(b.candidates?.users?.full_name ?? '')
   );
 
   const updateStatus = async (appId: string, newStatus: ApplicationStatus) => {
-    const supabase = createClient();
-    await supabase.from('applications').update({ status: newStatus }).eq('id', appId);
-    setApplications(apps => apps.map(a => a.id === appId ? { ...a, status: newStatus } : a));
-    setToast(`Status updated to ${STATUS_META[newStatus].label}`);
+    try {
+      await updateApplicationStatus(appId, newStatus);
+      setApplications(apps => apps.map(a => a.id === appId ? { ...a, status: newStatus } : a));
+      setToast(`Status updated to ${STATUS_META[newStatus].label}`);
+    } catch (err: any) {
+      setToast(`Error: ${err.message}`);
+    }
   };
 
   return (
@@ -71,7 +74,7 @@ export default function CandidateRankingClient({ job, applications: initApps }: 
         {sorted.map((app, idx) => {
           const nexts = VALID_TRANSITIONS[app.status as ApplicationStatus] ?? [];
           const candidateSkills = app.candidates?.skills ?? [];
-          const name = app.users?.full_name ?? 'Candidate';
+          const name = app.candidates?.users?.full_name ?? 'Candidate';
           const gapSkill = app.skill_gaps?.[0]?.skill_name ?? '';
 
           return (

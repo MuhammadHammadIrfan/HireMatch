@@ -1,26 +1,47 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import BackHeader from '@/components/layout/BackHeader';
 import HMButton from '@/components/ui/HMButton';
+import { completeCandidateSetup } from '@/app/actions/auth';
 
 export default function RegisterRolePage() {
   const router = useRouter();
   const [selected, setSelected] = useState<'candidate' | 'recruiter' | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const OPTIONS = [
     { key: 'candidate' as const, icon: '🔍', title: "I'm a Job Seeker", sub: 'Find jobs that match your skills and experience' },
     { key: 'recruiter' as const, icon: '🏢', title: "I'm a Recruiter", sub: 'Post jobs and find the best candidates using AI matching' },
   ];
 
+  const handleContinue = async () => {
+    if (!selected) return;
+    
+    if (selected === 'candidate') {
+      try {
+        setLoading(true);
+        setError('');
+        await completeCandidateSetup();
+        router.push('/candidate/dashboard');
+      } catch (err: any) {
+        setError(err.message || 'Failed to complete setup');
+        setLoading(false);
+      }
+    } else {
+      router.push('/register/recruiter');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-hm-surface px-5 pb-10">
-      <BackHeader title="" onBack={() => router.push('/login')} />
-      <div className="pt-2 pb-8">
+    <div className="min-h-screen bg-hm-surface px-5 pb-10 flex flex-col">
+      <div className="pt-2 pb-8 mt-12">
         <h1 className="text-[26px] font-black text-hm-textP mb-2">Join HireMatch</h1>
         <p className="text-sm text-hm-textS">Choose how you want to use the platform</p>
       </div>
+
+      {error && <div className="bg-hm-redBg border border-hm-red rounded-[10px] px-3.5 py-2.5 mb-4 text-[13px] text-hm-red font-medium">⚠ {error}</div>}
 
       {OPTIONS.map(opt => (
         <div key={opt.key} onClick={() => setSelected(opt.key)}
@@ -41,10 +62,11 @@ export default function RegisterRolePage() {
         </div>
       ))}
 
-      <div className="sticky bottom-0 pt-4">
+      <div className="mt-auto pt-4">
         <HMButton
-          disabled={!selected}
-          onClick={() => router.push(selected === 'candidate' ? '/register/candidate' : '/register/recruiter')}
+          disabled={!selected || loading}
+          loading={loading}
+          onClick={handleContinue}
         >
           Continue →
         </HMButton>

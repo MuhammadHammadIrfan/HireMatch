@@ -1,46 +1,36 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import BackHeader from '@/components/layout/BackHeader';
 import HMInput from '@/components/ui/HMInput';
 import HMButton from '@/components/ui/HMButton';
-import { createClient } from '@/lib/supabase/client';
+import { completeRecruiterSetup } from '@/app/actions/auth';
 
 const SIZES = ['1–10', '11–50', '51–200', '201–500', '500+'];
 
 export default function RecruiterRegisterPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ name: '', email: '', company: '', size: '', industry: '', password: '', confirm: '' });
+  const [form, setForm] = useState({ company: '', size: '', industry: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const set = (k: keyof typeof form) => (v: string) => setForm(f => ({ ...f, [k]: v }));
 
   const handleRegister = async () => {
-    if (!form.name || !form.email || !form.company || !form.password) { setError('Please fill all required fields'); return; }
-    if (form.password !== form.confirm) { setError('Passwords do not match'); return; }
-    setLoading(true); setError('');
-
-    const supabase = createClient();
-    const { error: signUpError } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-      options: {
-        data: { full_name: form.name },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-
-    if (signUpError) { setError(signUpError.message); setLoading(false); return; }
-
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      await supabase.from('users').upsert({ id: user.id, email: form.email, full_name: form.name, role: 'recruiter' });
-      await supabase.from('recruiters').upsert({ id: user.id, company_name: form.company, company_size: form.size, industry: form.industry });
+    if (!form.company || !form.size || !form.industry) { setError('Please fill all required fields'); return; }
+    
+    try {
+      setLoading(true);
+      setError('');
+      await completeRecruiterSetup({
+        companyName: form.company,
+        companySize: form.size,
+        industry: form.industry
+      });
+      router.push('/recruiter/dashboard');
+    } catch (err: any) {
+      setError(err.message || 'Failed to complete setup');
+      setLoading(false);
     }
-
-    setLoading(false);
-    router.push('/verify');
   };
 
   return (
@@ -56,8 +46,6 @@ export default function RecruiterRegisterPage() {
 
         {error && <div className="bg-hm-redBg border border-hm-red rounded-[10px] px-3.5 py-2.5 mb-4 text-[13px] text-hm-red font-medium">⚠ {error}</div>}
 
-        <HMInput label="Full Name" placeholder="Your full name" value={form.name} onChange={set('name')} />
-        <HMInput label="Work Email" type="email" placeholder="you@company.com" value={form.email} onChange={set('email')} />
         <HMInput label="Company Name" placeholder="e.g. Acme Corp" value={form.company} onChange={set('company')} />
 
         <div className="mb-4">
@@ -78,16 +66,10 @@ export default function RecruiterRegisterPage() {
         </div>
 
         <HMInput label="Industry" placeholder="e.g. Technology, Finance…" value={form.industry} onChange={set('industry')} />
-        <HMInput label="Password" type="password" placeholder="Create a password" value={form.password} onChange={set('password')} />
-        <HMInput label="Confirm Password" type="password" placeholder="Confirm password" value={form.confirm} onChange={set('confirm')} />
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 px-5 pt-4 pb-8 bg-white border-t border-hm-border">
-        <HMButton loading={loading} onClick={handleRegister}>Create Account</HMButton>
-        <div className="text-center mt-3.5 text-[13px] text-hm-textS">
-          Already have an account?{' '}
-          <Link href="/login" className="text-hm-primary font-bold no-underline">Sign In</Link>
-        </div>
+        <HMButton loading={loading} onClick={handleRegister}>Complete Setup</HMButton>
       </div>
     </div>
   );

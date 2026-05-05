@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import PipelineClient from '@/app/(recruiter)/recruiter/pipeline/PipelineClient';
 
@@ -9,14 +9,16 @@ export default async function PipelinePage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 
-  const { data: applications } = await supabase
+  const adminClient = createAdminClient();
+
+  const { data: applications } = await adminClient
     .from('applications')
-    .select('*, jobs!inner(title, recruiter_id), users!candidates(full_name), candidates(skills, headline, profile_strength)')
+    .select('*, jobs!inner(title, recruiter_id), candidates(skills, headline, profile_strength, users(full_name))')
     .eq('jobs.recruiter_id', user.id)
     .order('submitted_at', { ascending: false });
 
   const columns = STATUSES.reduce((acc, s) => {
-    acc[s] = (applications ?? []).filter(a => a.status === s);
+    acc[s] = (applications ?? []).filter((a: any) => a.status === s);
     return acc;
   }, {} as Record<string, any[]>);
 

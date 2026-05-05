@@ -26,7 +26,7 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Public paths
-  const isPublic = ['/', '/login', '/register', '/verify', '/forgot-password', '/auth/callback']
+  const isPublic = ['/', '/login', '/register', '/auth/callback']
     .some(p => pathname.startsWith(p));
 
   // API routes — always allow
@@ -65,7 +65,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // Authenticated but no role → must complete registration
-    if (!role && pathname !== '/register' && !pathname.startsWith('/register') && pathname !== '/verify') {
+    if (!role && pathname !== '/register' && !pathname.startsWith('/register')) {
       return NextResponse.redirect(new URL('/register', request.url));
     }
   }
