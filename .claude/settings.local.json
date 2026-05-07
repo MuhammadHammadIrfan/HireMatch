@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const p = require\\('./node_modules/next/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(node -e \"try { require\\('next/font/google'\\); console.log\\('ok'\\) } catch\\(e\\) { console.log\\(e.message\\) }\")",
+      "Bash(node -e \"const f = require\\('next/font/google'\\); console.log\\(Object.keys\\(f\\).filter\\(k => k.includes\\('Jakarta'\\) || k.includes\\('DM'\\)\\)\\)\")",
+      "Bash(node -e \"const d = require\\('./node_modules/next/dist/compiled/@next/font/dist/google/font-data.json'\\); const k = Object.keys\\(d\\); console.log\\(k.filter\\(x => x.includes\\('Jakarta'\\) || x.includes\\('DM'\\)\\)\\)\")",
+      "Bash(node -e \"const d = require\\('./node_modules/next/dist/compiled/@next/font/dist/google/font-data.json'\\); console.log\\(JSON.stringify\\(d['Plus Jakarta Sans']\\)\\)\")",
+      "Bash(xargs grep -l \"font\")",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\umerh\\\\Downloads\\\\HireMatch\\\\app\\\\\\(candidate\\)\\\\candidate\\\\applications\\\\\" -File | ForEach-Object { $_.Name })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\umerh\\\\Downloads\\\\HireMatch\\\\components\\\\ui\\\\\" -File | ForEach-Object { $_.Name })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\umerh\\\\Downloads\\\\HireMatch\\\\components\\\\layout\\\\\" -File | ForEach-Object { $_.Name })",
+      "Bash(node -e \"const p = require\\('./package.json'\\); const deps = {...p.dependencies,...p.devDependencies}; ['framer-motion','lucide-react','motion'].forEach\\(k => console.log\\(k, deps[k] ?? 'NOT INSTALLED'\\)\\)\")",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"const tw = require\\('tailwindcss/package.json'\\); console.log\\(tw.version\\)\")",
+      "Bash(node -e \"const p = require\\('./package.json'\\); const deps = {...p.dependencies, ...p.devDependencies}; ['framer-motion','lucide-react','@shadcn/ui','shadcn'].forEach\\(d => console.log\\(d+':', deps[d] || 'NOT INSTALLED'\\)\\)\")",
+      "Bash(npx next *)",
+      "Bash(node -e ' *)",
+      "Bash(Remove-Item -Recurse -Force .next\\\\dev -ErrorAction SilentlyContinue)",
+      "Bash(Write-Host \"Dev cache cleared\")"
+    ]
+  }
+}

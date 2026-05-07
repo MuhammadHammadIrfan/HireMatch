@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 
 type ButtonVariant =
   | 'primary' | 'secondary' | 'ghost' | 'destructive'
@@ -17,15 +17,15 @@ interface HMButtonProps {
 }
 
 const VARIANTS: Record<ButtonVariant, string> = {
-  primary:      'bg-hm-primary text-white hover:bg-hm-primaryL',
-  secondary:    'bg-white text-hm-primary border-[1.5px] border-hm-primary hover:bg-hm-primaryBg',
-  ghost:        'bg-transparent text-hm-primary hover:bg-hm-primaryBg',
-  destructive:  'bg-hm-red text-white',
-  white:        'bg-white text-hm-primary hover:bg-hm-primaryBg',
-  whiteOutline: 'bg-transparent text-white border-[1.5px] border-white/65 hover:bg-white/10',
-  greenSolid:   'bg-hm-green text-white',
-  redSolid:     'bg-hm-red text-white',
-  amberSolid:   'bg-hm-amber text-white',
+  primary:      'bg-hm-blue text-white hover:bg-hm-blueLight',
+  secondary:    'bg-white text-hm-blue border border-hm-blue hover:bg-hm-blueBg',
+  ghost:        'bg-transparent text-hm-blue hover:bg-hm-blueBg',
+  destructive:  'bg-hm-rose text-white hover:bg-rose-600',
+  white:        'bg-white text-hm-blue hover:bg-hm-blueBg shadow-card',
+  whiteOutline: 'bg-transparent text-white border border-white/65 hover:bg-white/10',
+  greenSolid:   'bg-hm-green text-white hover:bg-emerald-600',
+  redSolid:     'bg-hm-rose text-white hover:bg-rose-600',
+  amberSolid:   'bg-hm-amber text-white hover:bg-amber-600',
 };
 
 function Spinner({ color = 'white' }: { color?: string }) {
@@ -50,16 +50,17 @@ export default function HMButton({
       onClick={isDisabled ? undefined : onClick}
       disabled={isDisabled}
       className={[
-        'flex items-center justify-center gap-2 rounded-[10px] font-semibold font-sans',
-        'transition-all duration-150 select-none active:opacity-80',
-        size === 'lg' ? 'h-12 text-[15px]' : 'h-10 text-[13px]',
+        'flex items-center justify-center gap-2 rounded-lg font-display font-semibold',
+        'transition-all duration-150 select-none',
+        'active:scale-[0.97]',
+        size === 'lg' ? 'h-12 text-[15px]' : 'h-9 text-[13px]',
         fullWidth ? 'w-full' : 'w-auto px-5',
-        isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
+        isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-0.5',
         VARIANTS[variant] ?? VARIANTS.primary,
         className,
       ].join(' ')}
     >
-      {loading ? <Spinner color={spinnerDark ? '#1565C0' : 'white'} /> : children}
+      {loading ? <Spinner color={spinnerDark ? '#3B82F6' : 'white'} /> : children}
     </button>
   );
 }

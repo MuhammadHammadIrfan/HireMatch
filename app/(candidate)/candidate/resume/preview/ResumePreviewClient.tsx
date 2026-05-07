@@ -35,7 +35,7 @@ export default function ResumePreviewClient({ candidate }: { candidate: DBCandid
       <BackHeader title="Resume Preview" onBack={() => router.push('/candidate/resume/upload')} />
       <div className="px-4 pt-4 pb-24">
         <div className="rounded-2xl px-4 py-4 mb-5 flex items-center gap-3"
-          style={{ background: 'linear-gradient(135deg,#2E7D32,#1B5E20)' }}>
+          style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}>
           <div className="text-3xl">✅</div>
           <div>
             <div className="text-[15px] font-bold text-white">Resume Parsed Successfully</div>

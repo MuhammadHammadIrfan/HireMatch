@@ -4,7 +4,7 @@ interface HMProgressBarProps {
   height?: number;
 }
 
-export default function HMProgressBar({ value, color = '#1565C0', height = 8 }: HMProgressBarProps) {
+export default function HMProgressBar({ value, color = '#3B82F6', height = 8 }: HMProgressBarProps) {
   return (
     <div className="rounded-full overflow-hidden bg-hm-border" style={{ height }}>
       <div

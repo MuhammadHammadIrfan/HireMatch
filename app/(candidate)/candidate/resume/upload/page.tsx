@@ -62,9 +62,9 @@ export default function ResumeUploadPage() {
           onDrop={e => { e.preventDefault(); handleFile(e.dataTransfer.files[0]); }}
           className="rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 mb-4"
           style={{
-            border: `2px dashed ${state === 'dragover' ? '#1565C0' : error ? '#C62828' : '#E0E7EF'}`,
-            background: state === 'dragover' ? 'rgba(21,101,192,0.09)'
-              : (state === 'selected' || state === 'done') ? '#F0FDF4' : 'white',
+            border: `2px dashed ${state === 'dragover' ? '#3B82F6' : error ? '#F43F5E' : '#E2E8F0'}`,
+            background: state === 'dragover' ? 'rgba(59,130,246,0.06)'
+              : (state === 'selected' || state === 'done') ? 'rgba(16,185,129,0.05)' : 'white',
           }}>
           <input ref={inputRef} type="file" accept=".pdf,.docx" className="hidden"
             onChange={e => handleFile(e.target.files?.[0] ?? null)} />
@@ -73,7 +73,7 @@ export default function ResumeUploadPage() {
             <div>
               <div className="text-3xl mb-3">⏳</div>
               <div className="text-sm font-semibold text-hm-primary mb-4">Parsing resume with AI…</div>
-              <HMProgressBar value={progress} color="#1565C0" height={6} />
+              <HMProgressBar value={progress} color="#3B82F6" height={6} />
               <div className="text-xs text-hm-textS mt-2">{progress}%</div>
             </div>
           ) : state === 'selected' || state === 'done' ? (

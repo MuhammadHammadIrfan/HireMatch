@@ -35,14 +35,14 @@ export default function StatusTimeline({
             <div
               className="w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center"
               style={{
-                background: i <= reached ? '#1565C0' : '#E0E7EF',
-                borderColor: i <= reached ? '#1565C0' : '#E0E7EF',
+                background: i <= reached ? '#3B82F6' : '#E0E7EF',
+                borderColor: i <= reached ? '#3B82F6' : '#E0E7EF',
               }}
             >
               {i <= reached && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
             </div>
             {i < steps.length - 1 && (
-              <div className="w-0.5 h-7 mt-1" style={{ background: i < reached ? '#1565C0' : '#E0E7EF' }} />
+              <div className="w-0.5 h-7 mt-1" style={{ background: i < reached ? '#3B82F6' : '#E0E7EF' }} />
             )}
           </div>
           <div>

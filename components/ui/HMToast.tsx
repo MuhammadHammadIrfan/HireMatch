@@ -8,9 +8,9 @@ interface HMToastProps {
 }
 
 const BG: Record<string, string> = {
-  success: '#1A1A2E',
-  error:   '#C62828',
-  info:    '#1565C0',
+  success: '#0F172A',
+  error:   '#F43F5E',
+  info:    '#3B82F6',
 };
 
 const ICONS: Record<string, string> = {

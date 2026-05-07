@@ -5,10 +5,10 @@ interface HMSkillChipProps {
 }
 
 const VARIANTS = {
-  default: { bg: '#EEF2F7',                     color: '#5A6A7A' },
-  matched: { bg: 'rgba(46,125,50,0.1)',          color: '#2E7D32' },
-  missing: { bg: 'rgba(245,127,23,0.1)',         color: '#F57F17' },
-  primary: { bg: 'rgba(21,101,192,0.09)',        color: '#1565C0' },
+  default: { bg: '#F1F5F9',                      color: '#64748B' },
+  matched: { bg: 'rgba(16,185,129,0.10)',        color: '#10B981' },
+  missing: { bg: 'rgba(245,158,11,0.12)',        color: '#F59E0B' },
+  primary: { bg: 'rgba(59,130,246,0.09)',        color: '#3B82F6' },
 };
 
 export default function HMSkillChip({ label, variant = 'default', onRemove }: HMSkillChipProps) {

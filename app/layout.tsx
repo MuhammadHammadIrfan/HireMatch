@@ -1,10 +1,22 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Plus_Jakarta_Sans, DM_Sans } from 'next/font/google';
 import { Suspense } from 'react';
 import './globals.css';
 import PostHogProvider from '@/components/providers/PostHogProvider';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm',
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'HireMatch — Smart Jobs. Real Matches.',
@@ -24,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#1565C0',
+  themeColor: '#0F172A',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -33,23 +45,19 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${jakarta.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
-      <body className="font-sans bg-hm-surface antialiased" suppressHydrationWarning>
-        {/* Max-width mobile shell */}
-        <div className="relative min-h-screen max-w-[430px] mx-auto bg-hm-surface shadow-2xl overflow-hidden">
-          {/* PostHog: Suspense required because PostHogProvider uses useSearchParams */}
-          <Suspense fallback={null}>
-            <PostHogProvider>
-              {children}
-            </PostHogProvider>
-          </Suspense>
-        </div>
+      <body className="font-sans bg-hm-surface antialiased min-h-screen" suppressHydrationWarning>
+        <Suspense fallback={null}>
+          <PostHogProvider>
+            {children}
+          </PostHogProvider>
+        </Suspense>
       </body>
     </html>
   );

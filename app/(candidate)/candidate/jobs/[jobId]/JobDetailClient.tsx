@@ -21,84 +21,102 @@ export default function JobDetailClient({ job, userId }: Props) {
 
   return (
     <div className="min-h-screen bg-hm-surface flex flex-col">
-      <div className="bg-white border-b border-hm-border">
-        <div className="flex items-center px-4 pt-14 pb-4 gap-3">
-          <button onClick={() => router.back()}
-            className="w-9 h-9 rounded-full bg-[#F0F4F8] border-none cursor-pointer text-lg flex items-center justify-center">←</button>
-          <div className="flex-1" />
-          <button onClick={() => setBookmarked(!bookmarked)}
-            className={`w-9 h-9 rounded-full border-none cursor-pointer text-lg ${bookmarked ? 'text-hm-primary' : 'text-hm-textS'}`}
-            style={{ background: bookmarked ? 'rgba(21,101,192,0.09)' : '#F0F4F8' }}>
-            {bookmarked ? '🔖' : '🏷'}
-          </button>
-        </div>
-        <div className="px-5 pb-5 flex items-start gap-4">
-          <CompanyLogo company={companyName} size={56} />
-          <div className="flex-1">
-            <div className="text-xl font-black text-hm-textP mb-1">{job.title}</div>
-            <div className="text-sm text-hm-textS mb-1">{companyName} · {job.location}</div>
-            <div className="text-[13px] text-hm-textS">💼 {job.employment_type}</div>
-          </div>
-        </div>
-
-        <div className="mx-5 mb-4 rounded-2xl p-3.5 flex items-center gap-4"
-          style={{ background: 'linear-gradient(135deg,rgba(21,101,192,0.09),rgba(46,125,50,0.06))' }}>
-          <HMMatchRing score={job.match_score ?? 0} size={68} />
-          <div>
-            <div className="text-[13px] font-bold text-hm-textP mb-0.5">Your Match Score</div>
-            <div className="text-xs text-hm-textS">Based on your skills & experience</div>
-            {job.salary_range && <div className="text-[13px] font-bold text-hm-green mt-1">💰 {job.salary_range}</div>}
-          </div>
-        </div>
-
-        <div className="flex border-b border-hm-border">
-          {(['overview', 'requirements', 'skill-gap'] as const).map(t => (
-            <button key={t} onClick={() => setTab(t)}
-              className="flex-1 py-3 border-none bg-transparent font-sans text-[13px] cursor-pointer transition-all duration-150"
-              style={{
-                fontWeight: tab === t ? 700 : 400,
-                color: tab === t ? '#1565C0' : '#5A6A7A',
-                borderBottom: `2.5px solid ${tab === t ? '#1565C0' : 'transparent'}`,
-              }}>
-              {t === 'overview' ? 'Overview' : t === 'requirements' ? 'Requirements' : 'Skill Gap'}
+      <div className="bg-white border-b border-hm-border sticky top-0 z-20">
+        <div className="max-w-[720px] mx-auto">
+          <div className="flex items-center px-4 pt-14 pb-4 gap-3 md:pt-5">
+            <button onClick={() => router.back()}
+              className="w-9 h-9 rounded-xl bg-hm-surface border-none cursor-pointer flex items-center justify-center text-hm-textP hover:bg-hm-border transition-colors">
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
             </button>
-          ))}
-        </div>
-      </div>
+            <div className="flex-1" />
+            <button onClick={() => setBookmarked(!bookmarked)}
+              className="w-9 h-9 rounded-xl border-none cursor-pointer flex items-center justify-center transition-colors"
+              style={{ background: bookmarked ? 'rgba(59,130,246,0.10)' : '#F8FAFC', color: bookmarked ? '#3B82F6' : '#64748B' }}>
+              <svg width={18} height={18} viewBox="0 0 24 24" fill={bookmarked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+            </button>
+          </div>
 
-      <div className="flex-1 overflow-y-auto px-5 pt-5 pb-28">
-        {tab === 'overview' && (
-          <p className="text-sm text-hm-textP leading-[1.75]">{job.description}</p>
-        )}
-        {tab === 'requirements' && (
-          <div>
-            <div className="text-[15px] font-bold text-hm-textP mb-3">Requirements</div>
-            {(job.requirements ?? []).map((r, i) => (
-              <div key={i} className="flex gap-2.5 mb-3 items-start">
-                <div className="w-1.5 h-1.5 rounded-full bg-hm-primary mt-1.5 flex-shrink-0" />
-                <div className="text-sm text-hm-textP">{r}</div>
-              </div>
+          <div className="px-5 pb-5 flex items-start gap-4">
+            <CompanyLogo company={companyName} size={56} />
+            <div className="flex-1">
+              <div className="font-display text-xl font-black text-hm-textP mb-1">{job.title}</div>
+              <div className="text-sm text-hm-textS mb-1">{companyName} · {job.location}</div>
+              <div className="text-[13px] text-hm-textS">{job.employment_type}</div>
+            </div>
+          </div>
+
+          <div className="mx-5 mb-4 rounded-2xl p-3.5 flex items-center gap-4"
+            style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.07), rgba(6,182,212,0.05))' }}>
+            <HMMatchRing score={job.match_score ?? 0} size={68} />
+            <div>
+              <div className="font-display text-[13px] font-bold text-hm-textP mb-0.5">Your Match Score</div>
+              <div className="text-xs text-hm-textS">Based on your skills &amp; experience</div>
+              {job.salary_range && <div className="text-[13px] font-bold text-hm-green mt-1">💰 {job.salary_range}</div>}
+            </div>
+          </div>
+
+          <div className="flex border-b border-hm-border">
+            {(['overview', 'requirements', 'skill-gap'] as const).map(t => (
+              <button key={t} onClick={() => setTab(t)}
+                className="flex-1 py-3 border-none bg-transparent text-[13px] cursor-pointer transition-all duration-150"
+                style={{
+                  fontFamily: 'var(--font-display, Plus Jakarta Sans, system-ui)',
+                  fontWeight: tab === t ? 700 : 500,
+                  color: tab === t ? '#3B82F6' : '#64748B',
+                  borderBottom: `2px solid ${tab === t ? '#3B82F6' : 'transparent'}`,
+                }}>
+                {t === 'overview' ? 'Overview' : t === 'requirements' ? 'Requirements' : 'Skill Gap'}
+              </button>
             ))}
           </div>
-        )}
-        {tab === 'skill-gap' && (
-          <SkillGapContent
-            matchScore={job.match_score ?? 0}
-            matchedSkills={job.matched_skills ?? []}
-            missingSkills={(job.missing_skills ?? []).map(s => ({
-              name: s.name,
-              importance: s.importance as 'high' | 'medium' | 'low',
-              suggestion: s.suggestion,
-            }))}
-          />
-        )}
+        </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-hm-border px-5 pt-3 pb-8 flex gap-2.5">
-        <HMButton variant="secondary" onClick={() => router.push(`/candidate/jobs/${job.id}/skill-gap`)} className="flex-1">
-          Skill Feedback
-        </HMButton>
-        <HMButton onClick={() => router.push(`/candidate/apply/${job.id}`)} className="flex-[2]">Apply Now</HMButton>
+      <div className="flex-1 overflow-y-auto">
+        <div className="max-w-[720px] mx-auto px-5 pt-5 pb-8">
+          {tab === 'overview' && (
+            <p className="text-sm text-hm-textP leading-[1.75]"
+              style={{ fontFamily: 'var(--font-dm, DM Sans, system-ui)' }}>{job.description}</p>
+          )}
+          {tab === 'requirements' && (
+            <div>
+              <div className="font-display text-[15px] font-bold text-hm-textP mb-3">Requirements</div>
+              {(job.requirements ?? []).map((r, i) => (
+                <div key={i} className="flex gap-2.5 mb-3 items-start">
+                  <div className="w-1.5 h-1.5 rounded-full bg-hm-blue mt-1.5 flex-shrink-0" />
+                  <div className="text-sm text-hm-textP"
+                    style={{ fontFamily: 'var(--font-dm, DM Sans, system-ui)' }}>{r}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {tab === 'skill-gap' && (
+            <SkillGapContent
+              matchScore={job.match_score ?? 0}
+              matchedSkills={job.matched_skills ?? []}
+              missingSkills={(job.missing_skills ?? []).map(s => ({
+                name: s.name,
+                importance: s.importance as 'high' | 'medium' | 'low',
+                suggestion: s.suggestion,
+              }))}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Sticky action bar */}
+      <div className="sticky bottom-0 border-t border-hm-border px-5 pt-3 pb-8 md:pb-4 flex gap-2.5"
+        style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>
+        <div className="max-w-[720px] mx-auto flex gap-2.5 w-full">
+          <HMButton variant="secondary" onClick={() => router.push(`/candidate/jobs/${job.id}/skill-gap`)} className="flex-1">
+            Skill Gap
+          </HMButton>
+          <HMButton onClick={() => router.push(`/candidate/apply/${job.id}`)} className="flex-[2]">Apply Now</HMButton>
+        </div>
       </div>
     </div>
   );

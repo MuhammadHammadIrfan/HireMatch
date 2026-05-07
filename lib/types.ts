@@ -192,13 +192,13 @@ export interface AuthUser {
 // ── Status Meta ──────────────────────────────────────────
 
 export const STATUS_META: Record<ApplicationStatus | JobStatus, { bg: string; text: string; label: string }> = {
-  submitted:    { bg: 'rgba(21,101,192,0.12)',  text: '#1565C0', label: 'Submitted' },
-  under_review: { bg: 'rgba(245,127,23,0.12)',  text: '#F57F17', label: 'Under Review' },
-  shortlisted:  { bg: 'rgba(46,125,50,0.12)',   text: '#2E7D32', label: 'Shortlisted' },
-  rejected:     { bg: 'rgba(198,40,40,0.12)',   text: '#C62828', label: 'Rejected' },
-  active:       { bg: 'rgba(46,125,50,0.12)',   text: '#2E7D32', label: 'Active' },
-  draft:        { bg: 'rgba(90,106,122,0.12)',  text: '#5A6A7A', label: 'Draft' },
-  closed:       { bg: 'rgba(198,40,40,0.12)',   text: '#C62828', label: 'Closed' },
+  submitted:    { bg: 'rgba(59,130,246,0.10)',  text: '#3B82F6', label: 'Applied' },
+  under_review: { bg: 'rgba(245,158,11,0.10)',  text: '#F59E0B', label: 'Reviewing' },
+  shortlisted:  { bg: 'rgba(16,185,129,0.10)',  text: '#10B981', label: 'Shortlisted' },
+  rejected:     { bg: 'rgba(244,63,94,0.10)',   text: '#F43F5E', label: 'Rejected' },
+  active:       { bg: 'rgba(16,185,129,0.10)',  text: '#10B981', label: 'Active' },
+  draft:        { bg: 'rgba(100,116,139,0.10)', text: '#64748B', label: 'Draft' },
+  closed:       { bg: 'rgba(244,63,94,0.10)',   text: '#F43F5E', label: 'Closed' },
 };
 
 export const VALID_TRANSITIONS: Record<ApplicationStatus, ApplicationStatus[]> = {
@@ -209,9 +209,9 @@ export const VALID_TRANSITIONS: Record<ApplicationStatus, ApplicationStatus[]> =
 };
 
 export function scoreColor(score: number): string {
-  if (score >= 80) return '#2E7D32';
-  if (score >= 60) return '#F9A825';
-  return '#F57F17';
+  if (score >= 80) return '#10B981';
+  if (score >= 60) return '#F59E0B';
+  return '#F43F5E';
 }
 
 export function scoreLabel(score: number): string {

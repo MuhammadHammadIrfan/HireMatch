@@ -12,9 +12,9 @@ export default function HMCard({ children, onClick, noPad = false, className = '
     <div
       onClick={onClick}
       className={[
-        'bg-white rounded-2xl border border-hm-border',
+        'bg-white rounded-xl shadow-card',
         noPad ? '' : 'p-5',
-        onClick ? 'cursor-pointer' : '',
+        onClick ? 'cursor-pointer hm-card-hover hover:shadow-card-hover' : '',
         className,
       ].join(' ')}
     >

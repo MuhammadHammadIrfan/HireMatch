@@ -30,13 +30,13 @@ export default function ApplyConfirmationClient({ job, application }: Props) {
       {/* Animated checkmark */}
       <div className="w-24 h-24 rounded-full flex items-center justify-center mb-6"
         style={{
-          background: 'rgba(46,125,50,0.1)',
+          background: 'rgba(16,185,129,0.10)',
           transform: checked ? 'scale(1)' : 'scale(0)',
           transition: 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)',
         }}>
         <svg width={52} height={52} viewBox="0 0 52 52">
-          <circle cx="26" cy="26" r="25" fill="rgba(46,125,50,0.15)" />
-          <path d="M14 26l9 9 15-15" stroke="#2E7D32" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"
+          <circle cx="26" cy="26" r="25" fill="rgba(16,185,129,0.15)" />
+          <path d="M14 26l9 9 15-15" stroke="#10B981" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"
             fill="none" className="hm-check-path" />
         </svg>
       </div>

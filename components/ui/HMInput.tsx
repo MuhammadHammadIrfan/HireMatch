@@ -22,12 +22,24 @@ export default function HMInput({
 
   return (
     <div className={`mb-4 ${className}`}>
-      {label && <div className="text-[13px] font-semibold text-hm-textS mb-1.5">{label}</div>}
+      {label && (
+        <div className="text-[11px] font-semibold text-hm-textS mb-1.5 uppercase tracking-wide">
+          {label}
+        </div>
+      )}
       <div className={[
-        'flex items-center h-12 px-3.5 rounded-[10px] bg-white border-[1.5px] transition-colors duration-150',
-        error ? 'border-hm-red' : focused ? 'border-hm-primary' : 'border-hm-border',
+        'flex items-center h-11 px-3.5 rounded-xl bg-white border transition-all duration-150',
+        error
+          ? 'border-hm-rose ring-2 ring-hm-roseBg'
+          : focused
+            ? 'border-hm-blue ring-2 ring-hm-blueBg'
+            : 'border-hm-border hover:border-hm-textS/40',
       ].join(' ')}>
-        {icon && <span className={`mr-2.5 text-base flex-shrink-0 ${focused ? 'text-hm-primary' : 'text-hm-textS'}`}>{icon}</span>}
+        {icon && (
+          <span className={`mr-2.5 text-base flex-shrink-0 ${focused ? 'text-hm-blue' : 'text-hm-textS'}`}>
+            {icon}
+          </span>
+        )}
         <input
           type={type}
           placeholder={placeholder}
@@ -35,7 +47,8 @@ export default function HMInput({
           onChange={e => onChange(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="flex-1 border-none outline-none font-sans text-sm text-hm-textP bg-transparent placeholder:text-hm-textS/60"
+          className="flex-1 border-none outline-none text-sm text-hm-textP bg-transparent placeholder:text-hm-textS/50"
+          style={{ fontFamily: 'var(--font-dm, DM Sans, system-ui)' }}
         />
         {rightIcon && (
           <button type="button" onClick={onRightIconClick}
@@ -44,7 +57,7 @@ export default function HMInput({
           </button>
         )}
       </div>
-      {error && <div className="text-xs text-hm-red mt-1">{error}</div>}
+      {error && <div className="text-xs text-hm-rose mt-1">{error}</div>}
     </div>
   );
 }
