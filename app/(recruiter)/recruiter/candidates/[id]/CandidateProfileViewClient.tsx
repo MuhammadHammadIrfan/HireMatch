@@ -19,6 +19,7 @@ interface Props {
   application: DBApplication | null;
   skillGaps: DBSkillGap[];
   jobId?: string;
+  resumeViewUrl?: string | null;
 }
 
 function CompanyInitial({ name, size = 36 }: { name: string; size?: number }) {
@@ -32,7 +33,7 @@ function CompanyInitial({ name, size = 36 }: { name: string; size?: number }) {
   );
 }
 
-export default function CandidateProfileViewClient({ candidate, user, application, skillGaps, jobId }: Props) {
+export default function CandidateProfileViewClient({ candidate, user, application, skillGaps, jobId, resumeViewUrl }: Props) {
   const router = useRouter();
   const [tab, setTab] = useState<'resume' | 'match' | 'notes'>('resume');
   const [status, setStatus] = useState<ApplicationStatus>((application?.status ?? 'submitted') as ApplicationStatus);
@@ -227,11 +228,12 @@ export default function CandidateProfileViewClient({ candidate, user, applicatio
             )}
 
             {/* Resume link */}
-            {candidate.resume_url && (
+            {resumeViewUrl && (
               <div className="bg-white rounded-2xl p-5 shadow-card">
                 <div className="font-display text-[14px] font-bold text-hm-textP mb-3">Resume</div>
-                <a href={candidate.resume_url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl bg-hm-surface hover:bg-hm-blueBg transition-colors no-underline">
+                <a href={resumeViewUrl} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-hm-surface hover:bg-hm-blueBg transition-colors no-underline"
+                  title="Open resume PDF in a new tab">
                   <div className="w-10 h-10 rounded-xl bg-hm-blueBg flex items-center justify-center text-lg flex-shrink-0">📄</div>
                   <div className="flex-1 min-w-0">
                     <div className="text-[13px] font-bold text-hm-blue truncate">{candidate.resume_filename ?? 'Resume'}</div>

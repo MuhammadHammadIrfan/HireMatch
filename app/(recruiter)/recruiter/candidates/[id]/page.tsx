@@ -2,6 +2,24 @@ import { createClient, createAdminClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import CandidateProfileViewClient from '@/app/(recruiter)/recruiter/candidates/[id]/CandidateProfileViewClient';
 
+function getResumeStoragePath(resumeUrl: string | null): string | null {
+  if (!resumeUrl) return null;
+
+  try {
+    const parsed = new URL(resumeUrl);
+    const marker = '/storage/v1/object/public/resumes/';
+    const markerIndex = parsed.pathname.indexOf(marker);
+    if (markerIndex >= 0) {
+      return decodeURIComponent(parsed.pathname.slice(markerIndex + marker.length));
+    }
+  } catch {
+    // Fall through and treat the value as a raw storage path.
+  }
+
+  const cleaned = resumeUrl.replace(/^\/+/, '');
+  return cleaned.startsWith('resumes/') ? cleaned.slice('resumes/'.length) : cleaned;
+}
+
 export default async function CandidateProfileViewPage({
   params, searchParams,
 }: {
@@ -22,6 +40,16 @@ export default async function CandidateProfileViewPage({
 
   if (!candidate || !user) return notFound();
 
+  let resumeViewUrl: string | null = candidate.resume_url ?? null;
+  const resumePath = getResumeStoragePath(candidate.resume_url);
+
+  if (resumePath) {
+    const { data } = await adminClient.storage.from('resumes').createSignedUrl(resumePath, 60 * 10);
+    if (data?.signedUrl) {
+      resumeViewUrl = data.signedUrl;
+    }
+  }
+
   return (
     <CandidateProfileViewClient
       candidate={candidate}
@@ -29,6 +57,7 @@ export default async function CandidateProfileViewPage({
       application={application}
       skillGaps={skillGaps ?? []}
       jobId={jobId}
+      resumeViewUrl={resumeViewUrl}
     />
   );
 }

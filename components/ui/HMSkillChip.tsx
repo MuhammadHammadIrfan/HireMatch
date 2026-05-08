@@ -15,16 +15,16 @@ export default function HMSkillChip({ label, variant = 'default', onRemove }: HM
   const s = VARIANTS[variant] ?? VARIANTS.default;
   return (
     <div
-      className="inline-flex items-center gap-[3px] px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap flex-shrink-0"
+      className="inline-flex items-center gap-[3px] px-3 py-1.5 rounded-full text-[13px] font-semibold whitespace-nowrap flex-shrink-0"
       style={{ background: s.bg, color: s.color }}
     >
-      {variant === 'matched' && <span className="text-[10px]">✓</span>}
+      {variant === 'matched' && <span className="text-[11px]">✓</span>}
       {label}
       {onRemove && (
         <button
           type="button"
           onClick={onRemove}
-          className="bg-transparent border-none cursor-pointer pl-0.5 text-sm leading-none"
+          className="bg-transparent border-none cursor-pointer pl-0.5 text-[15px] leading-none"
           style={{ color: s.color }}
         >×</button>
       )}

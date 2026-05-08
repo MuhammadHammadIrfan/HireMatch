@@ -53,7 +53,7 @@ export default function HMButton({
         'flex items-center justify-center gap-2 rounded-lg font-display font-semibold',
         'transition-all duration-150 select-none',
         'active:scale-[0.97]',
-        size === 'lg' ? 'h-12 text-[15px]' : 'h-9 text-[13px]',
+        size === 'lg' ? 'h-12 text-[16px]' : 'h-9 text-[14px]',
         fullWidth ? 'w-full' : 'w-auto px-5',
         isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-0.5',
         VARIANTS[variant] ?? VARIANTS.primary,

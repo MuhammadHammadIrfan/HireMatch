@@ -264,14 +264,14 @@ export default function ActiveJobsClient({ jobs }: { jobs: DBJob[] }) {
                   )}
 
                   {/* Action buttons */}
-                  <div style={{ display: 'flex', alignItems: 'stretch', gap: 10 }} className="flex-col sm:flex-row" onClick={e => e.stopPropagation()}>
+                  <div style={{ display: 'grid', gap: 10, gridTemplateColumns: '1fr' }} className="sm:grid-cols-2" onClick={e => e.stopPropagation()}>
                     <button
                       onClick={() => router.push(`/recruiter/jobs/${job.id}/candidates`)}
                       style={{
-                        flex: 1, height: 44, borderRadius: 12, border: 'none', width: '100%',
+                        height: 44, borderRadius: 12, border: 'none', width: '100%',
                         background: 'linear-gradient(135deg, #3B82F6, #06B6D4)',
                         color: 'white', fontSize: 14, fontWeight: 800,
-                        cursor: 'pointer', fontFamily: 'var(--font-dm)',
+                        cursor: 'pointer', fontFamily: 'var(--font-dm)', whiteSpace: 'nowrap', textAlign: 'center',
                         transition: 'opacity 0.15s ease',
                         boxShadow: '0 4px 14px rgba(59,130,246,0.30)',
                       }}
@@ -285,7 +285,7 @@ export default function ActiveJobsClient({ jobs }: { jobs: DBJob[] }) {
                         height: 44, padding: '0 18px', borderRadius: 12, width: '100%',
                         border: '1.5px solid #E2E8F0', background: 'transparent',
                         fontSize: 14, fontWeight: 700, color: '#64748B',
-                        cursor: 'pointer', fontFamily: 'var(--font-dm)',
+                        cursor: 'pointer', fontFamily: 'var(--font-dm)', whiteSpace: 'nowrap', textAlign: 'center',
                         transition: 'border-color 0.15s ease, color 0.15s ease, background 0.15s ease',
                       }}
                       onMouseEnter={e => {

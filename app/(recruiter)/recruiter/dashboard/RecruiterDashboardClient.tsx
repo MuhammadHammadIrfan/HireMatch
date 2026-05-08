@@ -5,7 +5,6 @@ import { Avatar } from '@/components/ui/Avatar';
 import HMStatusBadge from '@/components/ui/HMStatusBadge';
 import HMButton from '@/components/ui/HMButton';
 import { scoreColor } from '@/lib/types';
-import { createClient } from '@/lib/supabase/client';
 import type { DBUser, DBRecruiter, DBJob } from '@/lib/types';
 
 interface Props { profile: DBUser | null; recruiter: DBRecruiter | null; activeJobs: DBJob[]; }
@@ -110,12 +109,6 @@ export default function RecruiterDashboardClient({ profile, recruiter, activeJob
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
   const companyInitial = (company[0] ?? 'H').toUpperCase();
-
-  const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push('/login');
-  };
 
   return (
     <div style={{ minHeight: '100vh', background: '#F8FAFC', display: 'flex', flexDirection: 'column' }}>
@@ -439,41 +432,6 @@ export default function RecruiterDashboardClient({ profile, recruiter, activeJob
           </div>
         )}
 
-        {/* Sign out */}
-        <div style={{
-          background: 'white', borderRadius: 20,
-          border: '1.5px solid rgba(244,63,94,0.15)', marginTop: 32,
-          boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
-          overflow: 'hidden',
-          animation: 'fadeSlideUp 0.55s ease both', animationDelay: '560ms',
-        }}>
-          <div style={{ height: 3, background: 'linear-gradient(90deg, #F43F5E, #F59E0B)' }} />
-          <button onClick={handleLogout}
-            style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: 18,
-              padding: '20px 24px', border: 'none',
-              background: 'transparent', cursor: 'pointer', textAlign: 'left',
-              transition: 'background 0.15s ease',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(244,63,94,0.04)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-            <div style={{
-              width: 52, height: 52, borderRadius: 16, flexShrink: 0,
-              background: 'rgba(244,63,94,0.10)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="#F43F5E" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                <polyline points="16 17 21 12 16 7"/>
-                <line x1="21" y1="12" x2="9" y2="12"/>
-              </svg>
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 17, fontWeight: 900, color: '#F43F5E', fontFamily: 'var(--font-display)', marginBottom: 3 }}>Sign Out</div>
-              <div style={{ fontSize: 14, color: '#94A3B8', fontFamily: 'var(--font-dm)' }}>Log out of your account</div>
-            </div>
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#F43F5E" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
       </div>
 
       {/* FAB */}
