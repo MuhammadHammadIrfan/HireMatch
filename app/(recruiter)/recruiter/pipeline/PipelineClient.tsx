@@ -75,8 +75,8 @@ export default function PipelineClient({ columns }: { columns: Record<string, an
       <div style={{
         background: 'linear-gradient(160deg, #080E1C 0%, #0F172A 50%, #111827 100%)',
         position: 'relative', overflow: 'hidden',
-        paddingLeft: 24, paddingRight: 24, paddingTop: 40, paddingBottom: 60,
-      }} className="md:px-10 md:pt-10">
+        padding: 'clamp(24px,5vw,48px) clamp(16px,4vw,48px) 80px',
+      }}>
 
         {/* Ambient orbs */}
         <div style={{
@@ -109,7 +109,7 @@ export default function PipelineClient({ columns }: { columns: Record<string, an
         }} />
 
         {/* Content */}
-        <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto', width: '100%' }}>
+        <div style={{ position: 'relative', width: '100%' }}>
           <div style={{ animation: 'fadeSlideUp 0.4s ease both', marginBottom: 28 }}>
             <div style={{
               fontFamily: 'var(--font-display)', fontWeight: 900,
@@ -159,24 +159,35 @@ export default function PipelineClient({ columns }: { columns: Record<string, an
       </div>
 
       {/* Kanban board */}
-      <div style={{ padding: '24px 24px 60px', overflowX: 'auto' }} className="md:px-10">
-        <div
-          className="md:grid md:grid-cols-4 md:gap-5"
-          style={{
-            display: 'flex', gap: 14,
-            minWidth: `${COLUMNS.length * 280}px`,
-            maxWidth: 1280, margin: '0 auto',
-          }}>
+      <style>{`
+        .pipeline-board {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+        @media (max-width: 1024px) {
+          .pipeline-board {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+          }
+        }
+        @media (max-width: 480px) {
+          .pipeline-board {
+            grid-template-columns: 1fr;
+            gap: 14px;
+          }
+        }
+      `}</style>
+      <div style={{ padding:'clamp(20px,3vw,28px) clamp(16px,4vw,48px) 80px' }}>
+        <div className="pipeline-board">
           {COLUMNS.map((col, colIdx) => {
             const apps = columns[col.key] ?? [];
             return (
               <div key={col.key}
                 style={{
-                  flexShrink: 0, minWidth: 260, flex: 1,
                   animation: 'colFade 0.5s ease both',
                   animationDelay: `${colIdx * 80}ms`,
-                }}
-                className="md:min-w-0">
+                }}>
 
                 {/* Column header */}
                 <div style={{
@@ -252,19 +263,19 @@ export default function PipelineClient({ columns }: { columns: Record<string, an
                           (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 12px rgba(0,0,0,0.06)';
                         }}>
 
-                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 12 }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 12, marginBottom: 12 }}>
                           <Avatar name={name} size={40} src={app.candidates?.users?.avatar_url} />
-                          <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ flex: '1 1 160px', minWidth: 0 }}>
                             <div style={{
                               fontSize: 14, fontWeight: 800, color: '#0F172A',
                               fontFamily: 'var(--font-display)',
-                              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                              whiteSpace: 'normal', overflowWrap: 'anywhere', lineHeight: 1.25,
                             }}>
                               {name}
                             </div>
                             <div style={{
                               fontSize: 12, color: '#64748B', fontFamily: 'var(--font-dm)',
-                              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                              whiteSpace: 'normal', overflowWrap: 'anywhere', lineHeight: 1.35,
                               marginTop: 2,
                             }}>
                               {app.candidates?.headline ?? 'Candidate'}
@@ -276,7 +287,7 @@ export default function PipelineClient({ columns }: { columns: Record<string, an
                           <div style={{
                             display: 'flex', alignItems: 'center', gap: 6,
                             fontSize: 12, color: '#94A3B8', fontFamily: 'var(--font-dm)',
-                            marginBottom: 12,
+                            marginBottom: 12, flexWrap: 'wrap',
                             padding: '6px 10px', borderRadius: 8,
                             background: '#F8FAFC',
                           }}>
@@ -285,7 +296,7 @@ export default function PipelineClient({ columns }: { columns: Record<string, an
                               <rect x="2" y="7" width="20" height="14" rx="2"/>
                               <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                             </svg>
-                            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            <span style={{ whiteSpace: 'normal', overflowWrap: 'anywhere' }}>
                               {app.jobs.title}
                             </span>
                           </div>

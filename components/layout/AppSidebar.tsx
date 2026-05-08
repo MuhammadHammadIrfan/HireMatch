@@ -196,8 +196,13 @@ export default function AppSidebar({ role }: { role: Role }) {
         className="md:hidden fixed bottom-0 left-0 right-0 z-50 hm-glass"
         style={{
           height: 60,
+          width: '100%',
+          maxWidth: '100vw',
           paddingBottom: 'env(safe-area-inset-bottom)',
-          borderTop: '1px solid rgba(226,232,240,0.8)',
+          borderTop: '1px solid rgba(255,255,255,0.08)',
+          background: 'rgba(15, 23, 42, 0.96)',
+          backdropFilter: 'blur(16px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(16px) saturate(180%)',
         }}
       >
         <div className="flex items-center h-full max-w-lg mx-auto px-1">
@@ -208,7 +213,7 @@ export default function AppSidebar({ role }: { role: Role }) {
                 key={tab.href}
                 href={tab.href}
                 className={[
-                  'flex-1 flex flex-col items-center justify-center gap-0.5 h-full no-underline',
+                  'flex-1 flex flex-col items-center justify-center gap-0.5 h-full no-underline relative',
                   'transition-all duration-150',
                   isActive ? 'text-hm-blue' : 'text-hm-textS',
                 ].join(' ')}

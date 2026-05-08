@@ -426,7 +426,7 @@ export default function RecruiterDashboardClient({ profile, recruiter, activeJob
                         </svg>
                         <strong style={{ color: '#0F172A' }}>{job.applicant_count}</strong> applicants
                       </div>
-                      <HMButton size="sm"
+                      <HMButton size="sm" fullWidth={false}
                         onClick={e => { e.stopPropagation(); router.push(`/recruiter/jobs/${job.id}/candidates`); }}
                         className="h-10 text-sm px-5">
                         View Candidates

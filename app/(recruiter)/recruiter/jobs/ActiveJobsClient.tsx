@@ -133,8 +133,8 @@ export default function ActiveJobsClient({ jobs }: { jobs: DBJob[] }) {
         </div>
       </div>
 
-      {/* Content — full width, big padding on desktop */}
-      <div style={{ padding: '28px 32px 100px' }} className="md:px-10">
+      {/* Content */}
+      <div style={{ padding: 'clamp(16px, 4vw, 40px) clamp(16px, 4vw, 40px) 100px' }}>
         {filtered.length === 0 ? (
           <div style={{
             textAlign: 'center', paddingTop: 100, paddingBottom: 100,
@@ -163,7 +163,7 @@ export default function ActiveJobsClient({ jobs }: { jobs: DBJob[] }) {
             )}
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(420px, 100%), 1fr))', gap: 20 }}>
             {filtered.map((job, i) => (
               <div key={job.id}
                 onClick={() => router.push(`/recruiter/jobs/${job.id}/candidates`)}
@@ -264,11 +264,11 @@ export default function ActiveJobsClient({ jobs }: { jobs: DBJob[] }) {
                   )}
 
                   {/* Action buttons */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }} onClick={e => e.stopPropagation()}>
+                  <div style={{ display: 'flex', alignItems: 'stretch', gap: 10 }} className="flex-col sm:flex-row" onClick={e => e.stopPropagation()}>
                     <button
                       onClick={() => router.push(`/recruiter/jobs/${job.id}/candidates`)}
                       style={{
-                        flex: 1, height: 44, borderRadius: 12, border: 'none',
+                        flex: 1, height: 44, borderRadius: 12, border: 'none', width: '100%',
                         background: 'linear-gradient(135deg, #3B82F6, #06B6D4)',
                         color: 'white', fontSize: 14, fontWeight: 800,
                         cursor: 'pointer', fontFamily: 'var(--font-dm)',
@@ -282,7 +282,7 @@ export default function ActiveJobsClient({ jobs }: { jobs: DBJob[] }) {
                     <button
                       onClick={() => router.push('/recruiter/pipeline')}
                       style={{
-                        height: 44, padding: '0 18px', borderRadius: 12,
+                        height: 44, padding: '0 18px', borderRadius: 12, width: '100%',
                         border: '1.5px solid #E2E8F0', background: 'transparent',
                         fontSize: 14, fontWeight: 700, color: '#64748B',
                         cursor: 'pointer', fontFamily: 'var(--font-dm)',

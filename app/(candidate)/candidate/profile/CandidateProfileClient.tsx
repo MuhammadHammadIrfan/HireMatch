@@ -131,7 +131,7 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
   const circumference = 2 * Math.PI * 34;
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC', display:'flex', flexDirection:'column' }}>
+    <div style={{ minHeight:'100vh', background:'#F8FAFC', display:'flex', flexDirection:'column', width:'100%', maxWidth:'100%', overflowX:'hidden' }}>
       {toast && <HMToast message={toast} onClose={() => setToast(null)} />}
       <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
       <style>{`
@@ -143,13 +143,13 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
       <div style={{ height:3, width:'100%', background:'linear-gradient(90deg,#3B82F6,#8B5CF6,#06B6D4,#10B981,#3B82F6)', backgroundSize:'200% 100%', animation:'shimmerBg 4s linear infinite' }} />
 
       {/* Dark hero header */}
-      <div style={{ background:'linear-gradient(160deg,#080E1C 0%,#0F172A 50%,#111827 100%)', position:'relative', overflow:'hidden', padding:'48px 48px 120px' }}>
+      <div style={{ background:'linear-gradient(160deg,#080E1C 0%,#0F172A 50%,#111827 100%)', position:'relative', overflow:'hidden', width:'100%', boxSizing:'border-box', padding:'clamp(24px,5vw,48px) clamp(16px,4vw,48px) 120px' }}>
         <div style={{ position:'absolute', top:'-20%', right:'-5%', width:600, height:600, borderRadius:'50%', pointerEvents:'none', background:'radial-gradient(circle at 60% 40%,rgba(59,130,246,0.15),transparent 65%)' }} />
         <div style={{ position:'absolute', bottom:'-10%', left:'-5%', width:400, height:400, borderRadius:'50%', pointerEvents:'none', background:'radial-gradient(circle at 40% 60%,rgba(139,92,246,0.10),transparent 70%)' }} />
         <div style={{ position:'absolute', bottom:0, left:0, right:0, height:80, background:'linear-gradient(to bottom,transparent,#F8FAFC)', pointerEvents:'none' }} />
 
         <div style={{ position:'relative', width:'100%' }}>
-          <div style={{ display:'flex', alignItems:'flex-end', gap:24, animation:'fadeSlideUp 0.45s ease both' }}>
+          <div style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-end', gap:24, animation:'fadeSlideUp 0.45s ease both' }}>
             {/* Avatar with upload */}
             <div style={{ position:'relative', flexShrink:0 }}>
               <Avatar name={name} size={96} src={avatarUrl} />
@@ -158,16 +158,16 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
               </button>
             </div>
 
-            <div style={{ flex:1, minWidth:0 }}>
-              <div style={{ fontFamily:'var(--font-display)', fontWeight:900, color:'white', fontSize:'clamp(28px,4vw,48px)', lineHeight:1.02, marginBottom:8, letterSpacing:'-0.03em' }}>{name}</div>
-              <div style={{ fontSize:15, color:'rgba(148,163,184,0.85)', fontFamily:'var(--font-dm)', marginBottom:10 }}>{profile?.email}</div>
+            <div style={{ flex:'1 1 240px', minWidth:0 }}>
+              <div style={{ fontFamily:'var(--font-display)', fontWeight:900, color:'white', fontSize:'clamp(28px,4vw,48px)', lineHeight:1.02, marginBottom:8, letterSpacing:'-0.03em', whiteSpace:'normal', overflowWrap:'anywhere' }}>{name}</div>
+              <div style={{ fontSize:15, color:'rgba(148,163,184,0.85)', fontFamily:'var(--font-dm)', marginBottom:10, whiteSpace:'normal', overflowWrap:'anywhere' }}>{profile?.email}</div>
               {editingHeadline ? (
                 <div style={{ display:'flex', alignItems:'center', gap:8 }}>
                   <input ref={headlineRef} value={headline} onChange={e => setHeadline(e.target.value)} onBlur={() => setEditingHeadline(false)} onKeyDown={e => e.key==='Enter' && setEditingHeadline(false)} autoFocus style={{ flex:1, fontSize:14, borderBottom:'2px solid #3B82F6', background:'transparent', outline:'none', color:'white', padding:'4px 0', fontFamily:'var(--font-dm)' }} placeholder="Your professional headline…" />
                 </div>
               ) : (
-                <button onClick={() => setEditingHeadline(true)} style={{ fontSize:14, color:'rgba(148,163,184,0.75)', background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:6, padding:0, fontFamily:'var(--font-dm)', transition:'color 0.15s ease' }} onMouseEnter={e => (e.currentTarget as HTMLElement).style.color='#3B82F6'} onMouseLeave={e => (e.currentTarget as HTMLElement).style.color='rgba(148,163,184,0.75)'}>
-                  {headline || 'Add a headline…'}
+                <button onClick={() => setEditingHeadline(true)} style={{ fontSize:14, color:'rgba(148,163,184,0.75)', background:'transparent', border:'none', cursor:'pointer', display:'inline-flex', alignItems:'flex-start', gap:6, padding:0, fontFamily:'var(--font-dm)', transition:'color 0.15s ease', textAlign:'left', flexWrap:'wrap' }} onMouseEnter={e => (e.currentTarget as HTMLElement).style.color='#3B82F6'} onMouseLeave={e => (e.currentTarget as HTMLElement).style.color='rgba(148,163,184,0.75)'}>
+                  <span style={{ whiteSpace:'normal', overflowWrap:'anywhere' }}>{headline || 'Add a headline…'}</span>
                   <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 </button>
               )}
@@ -187,7 +187,7 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
       </div>
 
       {/* Two-column body */}
-      <div style={{ flex:1, padding:'0 48px 60px', margin:'-32px auto 0', width:'100%' }}>
+      <div style={{ flex:1, padding:'0 clamp(16px,4vw,48px) 60px', margin:'-32px auto 0', width:'100%', maxWidth:'100%', boxSizing:'border-box' }}>
         <div style={{ display:'grid', gridTemplateColumns:'1fr', gap:24 }} className="lg:grid-cols-5">
 
           {/* LEFT COLUMN */}
@@ -195,12 +195,12 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
             {/* Resume */}
             <div style={{ background:'white', borderRadius:20, overflow:'hidden', boxShadow:'0 4px 20px rgba(0,0,0,0.06)', animation:'fadeSlideUp 0.5s ease both', animationDelay:'80ms' }}>
               <div style={{ height:3, background:'linear-gradient(90deg,#3B82F6,#06B6D4)' }} />
-              <div style={{ padding:'28px 28px' }}>
+              <div style={{ padding:'clamp(16px,4vw,28px) clamp(16px,4vw,28px)' }}>
                 <div style={{ fontFamily:'var(--font-display)', fontSize:20, fontWeight:900, color:'#0F172A', marginBottom:20 }}>My Resume</div>
               {candidate?.resume_url ? (
-                <div style={{ display:'flex', alignItems:'center', gap:16, background:'#F8FAFC', borderRadius:16, padding:'16px 20px' }}>
+                <div style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-start', gap:16, background:'#F8FAFC', borderRadius:16, padding:'16px 20px' }}>
                   <div style={{ width:48, height:48, borderRadius:14, background:'rgba(59,130,246,0.08)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:24, flexShrink:0 }}>📄</div>
-                  <div style={{ flex:1, minWidth:0 }}>
+                  <div style={{ flex:'1 1 180px', minWidth:0 }}>
                     <div style={{ fontSize:16, fontWeight:700, color:'#0F172A', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{candidate.resume_filename}</div>
                     <div style={{ fontSize:13, color:'#64748B', marginTop:4, fontFamily:'var(--font-dm)' }}>
                       Uploaded {candidate.resume_uploaded_at ? new Date(candidate.resume_uploaded_at).toLocaleDateString() : ''}
@@ -210,7 +210,7 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
                       <span style={{ fontSize:12, fontWeight:600, color:'#06B6D4' }}>AI-parsed by Gemini</span>
                     </div>
                   </div>
-                  <button onClick={() => router.push('/candidate/resume/upload')} style={{ background:'transparent', border:'1.5px solid #3B82F6', color:'#3B82F6', padding:'10px 18px', borderRadius:12, fontSize:14, fontWeight:700, cursor:'pointer', flexShrink:0, transition:'background 0.15s ease' }} onMouseEnter={e => (e.currentTarget as HTMLElement).style.background='rgba(59,130,246,0.06)'} onMouseLeave={e => (e.currentTarget as HTMLElement).style.background='transparent'}>
+                  <button onClick={() => router.push('/candidate/resume/upload')} style={{ background:'transparent', border:'1.5px solid #3B82F6', color:'#3B82F6', padding:'10px 18px', borderRadius:12, fontSize:14, fontWeight:700, cursor:'pointer', flexShrink:0, transition:'background 0.15s ease', marginLeft:'auto' }} onMouseEnter={e => (e.currentTarget as HTMLElement).style.background='rgba(59,130,246,0.06)'} onMouseLeave={e => (e.currentTarget as HTMLElement).style.background='transparent'}>
                     Replace
                   </button>
                 </div>
@@ -231,7 +231,7 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
             {/* Work Experience */}
             <div style={{ background:'white', borderRadius:20, overflow:'hidden', boxShadow:'0 4px 20px rgba(0,0,0,0.06)', animation:'fadeSlideUp 0.5s ease both', animationDelay:'140ms' }}>
               <div style={{ height:3, background:'linear-gradient(90deg,#8B5CF6,#3B82F6)' }} />
-              <div style={{ padding:'28px 28px' }}>
+              <div style={{ padding:'clamp(16px,4vw,28px) clamp(16px,4vw,28px)' }}>
                 <div style={{ fontFamily:'var(--font-display)', fontSize:20, fontWeight:900, color:'#0F172A', marginBottom:20 }}>Work Experience</div>
               {workExp.length === 0 ? (
                 <div style={{ textAlign:'center', padding:'24px 0' }}>
@@ -241,9 +241,9 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
               ) : (
                 <div style={{ display:'flex', flexDirection:'column', gap:24 }}>
                   {workExp.map((w, i) => (
-                    <div key={i} style={{ display:'flex', gap:16, paddingBottom: i < workExp.length-1 ? 24 : 0, borderBottom: i < workExp.length-1 ? '1px solid #F1F5F9' : 'none' }}>
+                    <div key={i} style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-start', gap:16, paddingBottom: i < workExp.length-1 ? 24 : 0, borderBottom: i < workExp.length-1 ? '1px solid #F1F5F9' : 'none' }}>
                       <CompanyInitial name={w.company} size={44} />
-                      <div style={{ flex:1, minWidth:0 }}>
+                      <div style={{ flex:'1 1 180px', minWidth:0 }}>
                         <div style={{ fontSize:17, fontWeight:800, color:'#0F172A', fontFamily:'var(--font-display)', marginBottom:4 }}>{w.title}</div>
                         <div style={{ fontSize:15, color:'#475569', fontFamily:'var(--font-dm)', marginBottom:4 }}>{w.company}</div>
                         <div style={{ fontSize:13, color:'#94A3B8', fontFamily:'var(--font-dm)', marginBottom: w.description ? 10 : 0 }}>{w.start_date} – {w.end_date ?? 'Present'}</div>
@@ -262,13 +262,13 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
             {education.length > 0 && (
               <div style={{ background:'white', borderRadius:20, overflow:'hidden', boxShadow:'0 4px 20px rgba(0,0,0,0.06)', animation:'fadeSlideUp 0.5s ease both', animationDelay:'200ms' }}>
                 <div style={{ height:3, background:'linear-gradient(90deg,#10B981,#06B6D4)' }} />
-                <div style={{ padding:'28px 28px' }}>
+                <div style={{ padding:'clamp(16px,4vw,28px) clamp(16px,4vw,28px)' }}>
                   <div style={{ fontFamily:'var(--font-display)', fontSize:20, fontWeight:900, color:'#0F172A', marginBottom:20 }}>Education</div>
                 <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
                   {education.map((e, i) => (
-                    <div key={i} style={{ display:'flex', gap:16, paddingBottom: i < education.length-1 ? 20 : 0, borderBottom: i < education.length-1 ? '1px solid #F1F5F9' : 'none' }}>
+                    <div key={i} style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-start', gap:16, paddingBottom: i < education.length-1 ? 20 : 0, borderBottom: i < education.length-1 ? '1px solid #F1F5F9' : 'none' }}>
                       <div style={{ width:48, height:48, borderRadius:14, background:'rgba(139,92,246,0.08)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:24, flexShrink:0 }}>🎓</div>
-                      <div style={{ flex:1, minWidth:0 }}>
+                      <div style={{ flex:'1 1 180px', minWidth:0 }}>
                         <div style={{ fontSize:17, fontWeight:800, color:'#0F172A', fontFamily:'var(--font-display)', marginBottom:4 }}>{e.degree}{e.field ? `, ${e.field}` : ''}</div>
                         <div style={{ fontSize:15, color:'#475569', fontFamily:'var(--font-dm)', marginBottom:4 }}>{e.school}</div>
                         {e.year && <div style={{ fontSize:13, color:'#94A3B8', fontFamily:'var(--font-dm)' }}>Class of {e.year}</div>}
@@ -280,29 +280,13 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
               </div>
             )}
 
-            {/* Sign out */}
-            <div style={{ background:'white', borderRadius:20, overflow:'hidden', boxShadow:'0 4px 20px rgba(0,0,0,0.06)', animation:'fadeSlideUp 0.5s ease both', animationDelay:'260ms' }}>
-              <div style={{ height:3, background:'linear-gradient(90deg,#F43F5E,#F97316)' }} />
-              <div style={{ padding:'24px 28px' }}>
-                <button onClick={handleLogout} style={{ width:'100%', display:'flex', alignItems:'center', gap:16, padding:'16px 20px', borderRadius:16, border:'1.5px solid rgba(244,63,94,0.15)', background:'transparent', cursor:'pointer', transition:'all 0.15s ease' }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background='rgba(244,63,94,0.05)'; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background='transparent'; }}>
-                  <div style={{ width:44, height:44, borderRadius:12, flexShrink:0, background:'rgba(244,63,94,0.08)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#F43F5E" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                  </div>
-                  <div style={{ textAlign:'left', flex:1 }}>
-                    <div style={{ fontFamily:'var(--font-display)', fontSize:16, fontWeight:800, color:'#F43F5E' }}>Sign Out</div>
-                    <div style={{ fontSize:12, color:'#94A3B8', fontFamily:'var(--font-dm)', marginTop:2 }}>You can sign back in anytime</div>
-                  </div>
-                  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#F43F5E" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-              </div>
-            </div>
           </div>
 
           {/* RIGHT COLUMN — Skills */}
           <div style={{ display:'flex', flexDirection:'column', gap:20 }} className="lg:col-span-3">
             <div style={{ background:'white', borderRadius:20, overflow:'hidden', boxShadow:'0 4px 20px rgba(0,0,0,0.06)', animation:'fadeSlideUp 0.5s ease both', animationDelay:'100ms' }}>
               <div style={{ height:3, background:'linear-gradient(90deg,#3B82F6,#8B5CF6)' }} />
-              <div style={{ padding:'28px 28px' }}>
+              <div style={{ padding:'clamp(16px,4vw,28px) clamp(16px,4vw,28px)' }}>
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:20 }}>
                   <div style={{ fontFamily:'var(--font-display)', fontSize:20, fontWeight:900, color:'#0F172A' }}>Skills</div>
                   <span style={{ fontSize:13, fontWeight:800, padding:'5px 14px', borderRadius:999, background:'rgba(59,130,246,0.08)', color:'#3B82F6' }}>{skills.length}</span>
@@ -327,11 +311,11 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
                 )}
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <input value={newSkill} onChange={e => setNewSkill(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && addSkill()}
                   placeholder="Add a skill… (press Enter)"
-                  className="flex-1 h-10 border border-hm-border rounded-xl px-3 text-[13px] outline-none focus:border-hm-blue focus:ring-2 focus:ring-hm-blueBg transition-all"
+                  className="flex-1 min-w-[180px] h-10 border border-hm-border rounded-xl px-3 text-[13px] outline-none focus:border-hm-blue focus:ring-2 focus:ring-hm-blueBg transition-all"
                   style={{ fontFamily: 'var(--font-dm)' }} />
                 <button onClick={addSkill}
                   className="h-10 px-4 rounded-xl text-white border-none font-semibold text-[13px] cursor-pointer hover:-translate-y-0.5 transition-all active:scale-95"
@@ -356,6 +340,23 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
               </div> {/* end color legend */}
               </div> {/* end padding */}
             </div> {/* end skills card */}
+
+            {/* Sign out */}
+            <div style={{ background:'white', borderRadius:20, overflow:'hidden', boxShadow:'0 4px 20px rgba(0,0,0,0.06)', animation:'fadeSlideUp 0.5s ease both', animationDelay:'160ms' }}>
+              <div style={{ height:3, background:'linear-gradient(90deg,#F43F5E,#F97316)' }} />
+              <div style={{ padding:'24px clamp(16px,4vw,28px)' }}>
+                <button onClick={handleLogout} style={{ width:'100%', display:'flex', flexWrap:'wrap', alignItems:'center', gap:16, padding:'16px 20px', borderRadius:16, border:'1.5px solid rgba(244,63,94,0.15)', background:'transparent', cursor:'pointer', transition:'all 0.15s ease' }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background='rgba(244,63,94,0.05)'; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background='transparent'; }}>
+                  <div style={{ width:44, height:44, borderRadius:12, flexShrink:0, background:'rgba(244,63,94,0.08)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#F43F5E" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                  </div>
+                  <div style={{ textAlign:'left', flex:'1 1 180px', minWidth:0 }}>
+                    <div style={{ fontFamily:'var(--font-display)', fontSize:16, fontWeight:800, color:'#F43F5E' }}>Sign Out</div>
+                    <div style={{ fontSize:12, color:'#94A3B8', fontFamily:'var(--font-dm)', marginTop:2 }}>You can sign back in anytime</div>
+                  </div>
+                  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#F43F5E" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+            </div>
 
             {/* Profile completeness tips */}
             {profileStrength < 100 && (
@@ -390,7 +391,7 @@ export default function CandidateProfileClient({ profile, candidate }: { profile
       </div>
 
       {/* Sticky save bar */}
-      <div style={{ position:'sticky', bottom:0, padding:'16px 48px', borderTop:'1px solid #E2E8F0', background:'rgba(255,255,255,0.95)', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)' }}>
+      <div style={{ position:'sticky', bottom:0, padding:'16px clamp(16px,4vw,48px)', borderTop:'1px solid #E2E8F0', background:'rgba(255,255,255,0.95)', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)' }}>
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:16 }}>
           <div className="text-[13px] text-hm-textS" style={{ fontFamily: 'var(--font-dm)' }}>
             {isDirty ? '● Unsaved changes' : 'All changes saved'}

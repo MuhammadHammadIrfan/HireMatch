@@ -72,7 +72,7 @@ export default function JobSearchPage() {
   }, [query, filter, expFilter]);
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC' }}>
+    <div style={{ minHeight:'100vh', background:'#F8FAFC', width:'100%', maxWidth:'100%', overflowX:'hidden' }}>
       <style>{`
         @keyframes shimmerBg { 0% { background-position:0% 50%; } 100% { background-position:-200% 50%; } }
         @keyframes fadeSlideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
@@ -82,20 +82,20 @@ export default function JobSearchPage() {
       <div style={{ height:3, width:'100%', background:'linear-gradient(90deg,#3B82F6,#8B5CF6,#06B6D4,#10B981,#3B82F6)', backgroundSize:'200% 100%', animation:'shimmerBg 4s linear infinite' }} />
 
       {/* Dark hero header + sticky search */}
-      <div style={{ background:'linear-gradient(160deg,#080E1C 0%,#0F172A 50%,#111827 100%)', position:'relative', overflow:'hidden' }}>
+      <div style={{ background:'linear-gradient(160deg,#080E1C 0%,#0F172A 50%,#111827 100%)', position:'relative', overflow:'hidden', width:'100%', boxSizing:'border-box' }}>
         {/* Orbs */}
         <div style={{ position:'absolute', top:'-30%', right:'-5%', width:540, height:540, borderRadius:'50%', pointerEvents:'none', background:'radial-gradient(circle at 60% 40%,rgba(59,130,246,0.13),transparent 65%)' }} />
         <div style={{ position:'absolute', bottom:'-20%', left:'-5%', width:400, height:400, borderRadius:'50%', pointerEvents:'none', background:'radial-gradient(circle at 40% 60%,rgba(6,182,212,0.09),transparent 70%)' }} />
         <div style={{ position:'absolute', bottom:0, left:0, right:0, height:50, background:'linear-gradient(to bottom,transparent,#F8FAFC)', pointerEvents:'none' }} />
 
         {/* Title */}
-        <div style={{ position:'relative', padding:'48px 48px 32px', width:'100%', animation:'fadeSlideUp 0.4s ease both' }}>
+        <div style={{ position:'relative', padding:'clamp(24px,5vw,48px) clamp(16px,4vw,48px) 32px', width:'100%', animation:'fadeSlideUp 0.4s ease both' }}>
           <div style={{ fontSize:15, fontWeight:500, color:'rgba(148,163,184,0.85)', fontFamily:'var(--font-dm)', marginBottom:8 }}>AI-ranked opportunities</div>
           <h1 style={{ fontFamily:'var(--font-display)', fontWeight:900, fontSize:'clamp(32px,5vw,56px)', color:'white', letterSpacing:'-0.03em', lineHeight:1.02, marginBottom:0 }}>Find Jobs</h1>
         </div>
 
         {/* Sticky search bar */}
-        <div style={{ position:'sticky', top:0, zIndex:20, background:'rgba(8,14,28,0.92)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(255,255,255,0.07)', padding:'14px 48px' }}>
+        <div style={{ position:'sticky', top:0, zIndex:20, background:'rgba(8,14,28,0.92)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(255,255,255,0.07)', padding:'14px clamp(16px,4vw,48px)' }}>
           <div style={{ width:'100%' }}>
             <div style={{ display:'flex', alignItems:'center', background:'rgba(255,255,255,0.06)', borderRadius:14, padding:'0 16px', gap:12, border:'1px solid rgba(255,255,255,0.10)', marginBottom:12, height:50, transition:'border-color 0.15s ease' }} onFocus={e => (e.currentTarget.style.borderColor='rgba(59,130,246,0.5)')} onBlur={e => (e.currentTarget.style.borderColor='rgba(255,255,255,0.10)')}>
               <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="rgba(148,163,184,0.7)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -115,7 +115,7 @@ export default function JobSearchPage() {
         </div>
       </div>
 
-      <div style={{ padding:'24px 48px 60px', display:'flex', gap:28, width:'100%' }}>
+      <div style={{ padding:'24px clamp(16px,4vw,48px) 60px', display:'flex', gap:28, width:'100%' }}>
         {/* Desktop filter sidebar */}
         <aside style={{ width:240, flexShrink:0 }} className="hidden md:block">
           <div style={{ background:'white', borderRadius:18, padding:'24px', boxShadow:'0 4px 20px rgba(0,0,0,0.06)', position:'sticky', top:120 }}>

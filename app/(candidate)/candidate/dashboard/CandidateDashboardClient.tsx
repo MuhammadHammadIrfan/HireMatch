@@ -84,7 +84,7 @@ export default function CandidateDashboardClient({ profile, candidate, matchedJo
   useEffect(() => { const t = setTimeout(() => setBarWidth(profileStrength), 300); return () => clearTimeout(t); }, [profileStrength]);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
+    <div style={{ minHeight: '100vh', background: '#F8FAFC', width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
       <style>{`
         @keyframes fadeSlideUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
         @keyframes shimmerBg { 0% { background-position:0% 50%; } 100% { background-position:-200% 50%; } }
@@ -96,7 +96,7 @@ export default function CandidateDashboardClient({ profile, candidate, matchedJo
       <div style={{ height:3, width:'100%', background:'linear-gradient(90deg,#3B82F6,#8B5CF6,#06B6D4,#10B981,#3B82F6)', backgroundSize:'200% 100%', animation:'shimmerBg 4s linear infinite' }} />
 
       {/* Dark hero header */}
-      <div style={{ position:'relative', overflow:'hidden', background:'linear-gradient(160deg,#080E1C 0%,#0F172A 45%,#111827 100%)', paddingLeft:24, paddingRight:24, paddingTop:40, paddingBottom:140 }} className="md:px-10 md:pt-10 md:pb-40">
+      <div style={{ position:'relative', overflow:'hidden', width:'100%', boxSizing:'border-box', background:'linear-gradient(160deg,#080E1C 0%,#0F172A 45%,#111827 100%)', padding:`clamp(24px,5vw,40px) clamp(16px,4vw,40px) 140px` }}>
         {/* Orbs */}
         <div style={{ position:'absolute', top:'-20%', right:'-10%', width:560, height:560, borderRadius:'50%', pointerEvents:'none', background:'radial-gradient(circle at 60% 40%,rgba(59,130,246,0.14),transparent 65%)' }} />
         <div style={{ position:'absolute', bottom:'-10%', left:'-5%', width:400, height:400, borderRadius:'50%', pointerEvents:'none', background:'radial-gradient(circle at 40% 60%,rgba(16,185,129,0.09),transparent 70%)' }} />
@@ -137,7 +137,7 @@ export default function CandidateDashboardClient({ profile, candidate, matchedJo
       </div>
 
       {/* Body */}
-      <div style={{ padding:'0 48px 80px', margin:'-20px auto 0', width:'100%' }}>
+      <div style={{ padding:'0 clamp(16px,4vw,48px) 80px', margin:'-20px auto 0', width:'100%', maxWidth:'100%', boxSizing:'border-box' }}>
 
         {/* Profile + Activity row */}
         <div style={{ display:'grid', gridTemplateColumns:'1fr', gap:20, marginBottom:28 }} className="lg:grid-cols-3">
@@ -220,12 +220,12 @@ export default function CandidateDashboardClient({ profile, candidate, matchedJo
         </div>
 
         {/* Best Matches section */}
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', paddingBottom:20, marginBottom:24, borderBottom:'1px solid #E2E8F0', animation:'fadeSlideUp 0.55s ease both', animationDelay:'560ms' }}>
+        <div style={{ display:'flex', alignItems:'flex-start', gap:14, paddingBottom:20, marginBottom:24, borderBottom:'1px solid #E2E8F0', animation:'fadeSlideUp 0.55s ease both', animationDelay:'560ms' }} className="flex-col sm:flex-row sm:items-center sm:justify-between">
           <div style={{ display:'flex', alignItems:'center', gap:14 }}>
             <div style={{ width:4, height:28, borderRadius:4, background:'linear-gradient(180deg,#3B82F6,#06B6D4)', flexShrink:0 }} />
             <h2 style={{ fontFamily:'var(--font-display)', fontWeight:900, color:'#0F172A', fontSize:'clamp(20px,2.5vw,26px)', margin:0 }}>Best Matches</h2>
           </div>
-          <button onClick={() => router.push('/candidate/jobs')} style={{ display:'flex', alignItems:'center', gap:7, color:'white', fontSize:14, fontWeight:700, background:'linear-gradient(135deg,#3B82F6,#06B6D4)', border:'none', cursor:'pointer', padding:'10px 20px', borderRadius:12, fontFamily:'var(--font-dm)', boxShadow:'0 4px 14px rgba(59,130,246,0.35)', transition:'transform 0.15s ease,box-shadow 0.15s ease' }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}>
+          <button onClick={() => router.push('/candidate/jobs')} style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:7, color:'white', fontSize:14, fontWeight:700, background:'linear-gradient(135deg,#3B82F6,#06B6D4)', border:'none', cursor:'pointer', padding:'10px 18px', borderRadius:12, fontFamily:'var(--font-dm)', boxShadow:'0 4px 14px rgba(59,130,246,0.35)', transition:'transform 0.15s ease,box-shadow 0.15s ease' }} className="w-full sm:w-auto sm:px-5" onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}>
             View All
             <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>

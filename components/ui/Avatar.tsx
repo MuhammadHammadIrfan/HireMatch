@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 const COLORS = ['#3B82F6', '#10B981', '#8B5CF6', '#06B6D4', '#F43F5E'];
 const COMPANY_COLORS = ['#3B82F6', '#10B981', '#F43F5E', '#F59E0B', '#8B5CF6', '#06B6D4'];
 
@@ -14,16 +16,18 @@ export function Avatar({
   size?: number;
   src?: string | null;
 }) {
+  const [error, setError] = useState(false);
   const color = getColor(name, COLORS);
   const initials = (name ?? '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
-  if (src) {
+  if (src && !error) {
     return (
       <img
         src={src}
         alt={name}
         className="rounded-full object-cover flex-shrink-0"
         style={{ width: size, height: size }}
+        onError={() => setError(true)}
       />
     );
   }

@@ -63,7 +63,7 @@ export default function ApplicationsClient({ applications }: { applications: any
   const empty = EMPTY_STATES[activeTab];
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC' }}>
+    <div style={{ minHeight:'100vh', background:'#F8FAFC', width:'100%', maxWidth:'100%', overflowX:'hidden' }}>
       <style>{`
         @keyframes shimmerBg { 0% { background-position:0% 50%; } 100% { background-position:-200% 50%; } }
         @keyframes fadeSlideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
@@ -73,7 +73,7 @@ export default function ApplicationsClient({ applications }: { applications: any
       <div style={{ height:3, width:'100%', background:'linear-gradient(90deg,#3B82F6,#8B5CF6,#06B6D4,#10B981,#3B82F6)', backgroundSize:'200% 100%', animation:'shimmerBg 4s linear infinite' }} />
 
       {/* Dark hero header */}
-      <div style={{ background:'linear-gradient(160deg,#080E1C 0%,#0F172A 50%,#111827 100%)', position:'relative', overflow:'hidden', padding:'48px 48px 80px' }}>
+      <div style={{ background:'linear-gradient(160deg,#080E1C 0%,#0F172A 50%,#111827 100%)', position:'relative', overflow:'hidden', padding:'clamp(24px,5vw,48px) clamp(16px,4vw,48px) 80px' }}>
         <div style={{ position:'absolute', top:'-30%', right:'-5%', width:540, height:540, borderRadius:'50%', pointerEvents:'none', background:'radial-gradient(circle at 60% 40%,rgba(59,130,246,0.13),transparent 65%)' }} />
         <div style={{ position:'absolute', bottom:0, left:0, right:0, height:50, background:'linear-gradient(to bottom,transparent,#F8FAFC)', pointerEvents:'none' }} />
 
@@ -103,7 +103,7 @@ export default function ApplicationsClient({ applications }: { applications: any
 
       {/* Tabs bar */}
       <div style={{ background:'white', borderBottom:'1px solid #E2E8F0', position:'sticky', top:0, zIndex:20 }}>
-        <div style={{ padding:'0 48px' }}>
+        <div style={{ padding:'0 clamp(16px,4vw,48px)' }}>
           <div style={{ display:'flex', overflowX:'auto', gap:0 }}>
             {TABS.map(t => {
               const isActive = activeTab === t;
@@ -118,7 +118,7 @@ export default function ApplicationsClient({ applications }: { applications: any
         </div>
       </div>
 
-      <div style={{ padding:'28px 48px 60px', width:'100%' }}>
+      <div style={{ padding:'28px clamp(16px,4vw,48px) 60px', width:'100%' }}>
         {filtered.length === 0 ? (
           <div style={{ textAlign:'center', padding:'60px 20px' }}>
             <div style={{ fontSize:56, marginBottom:16 }}>{empty.emoji}</div>

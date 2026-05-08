@@ -449,7 +449,7 @@ export default function PostJobPage() {
       </div>
 
       {/* Sticky action bar */}
-      <div className="sticky bottom-0 px-4 pt-3.5 pb-8 md:pb-5 border-t border-hm-border"
+      <div className="sticky bottom-[60px] md:bottom-0 px-4 pt-3.5 pb-5 border-t border-hm-border"
         style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>
         <div className="max-w-2xl mx-auto flex gap-2.5">
           <button
